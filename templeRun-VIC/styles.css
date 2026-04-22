@@ -1,0 +1,433 @@
+/* Reset mínimo */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: #1a1520;
+    color: #f5f0e6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1rem;
+}
+
+.app {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.hud {
+    text-align: center;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #ffd27a;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.hint {
+    margin: 0.35rem 0 0;
+    font-size: 0.8rem;
+    opacity: 0.85;
+    line-height: 1.35;
+}
+
+.stage-wrap {
+    perspective: 520px;
+    perspective-origin: 50% 35%;
+}
+
+.game-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    max-height: min(72vh, 640px);
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.45),
+        inset 0 0 0 2px rgba(255, 210, 122, 0.25);
+    background: #2a1810;
+}
+
+/* Cielo estilo atardecer */
+.sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        #ff8c42 0%,
+        #ffb347 35%,
+        #e8a87c 55%,
+        #6b4c3b 85%,
+        #3d2a22 100%
+    );
+    z-index: 0;
+}
+
+/* Parallax suave: nubes y montañas */
+.parallax {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.clouds {
+    position: absolute;
+    left: -20%;
+    right: -20%;
+    top: 8%;
+    height: 28%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0 40px,
+        rgba(255, 255, 255, 0.12) 40px 80px
+    );
+    border-radius: 40% 60% 50% 50% / 60% 40% 60% 40%;
+    filter: blur(12px);
+    opacity: 0.7;
+    animation: drift 18s linear infinite;
+}
+
+.mountains {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 32%;
+    height: 22%;
+    background:
+        linear-gradient(165deg, transparent 40%, rgba(45, 35, 40, 0.85) 40%),
+        linear-gradient(-15deg, transparent 50%, rgba(35, 28, 32, 0.9) 50%);
+    background-size: 120px 100%, 140px 100%;
+    background-position: 0 0, 60px 0;
+    animation: mountain-scroll 25s linear infinite;
+    opacity: 0.85;
+}
+
+@keyframes drift {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-80px);
+    }
+}
+
+@keyframes mountain-scroll {
+    from {
+        background-position: 0 0, 60px 0;
+    }
+    to {
+        background-position: -120px 0, -80px 0;
+    }
+}
+
+/* Puente / pista con sensación de profundidad */
+.track {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 88%;
+    height: 68%;
+    transform: translateX(-50%) rotateX(12deg);
+    transform-origin: 50% 100%;
+    z-index: 2;
+    background: linear-gradient(
+        180deg,
+        rgba(60, 45, 35, 0.95) 0%,
+        rgba(120, 90, 55, 0.98) 45%,
+        rgba(90, 65, 40, 1) 100%
+    );
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset 0 0 0 3px rgba(80, 60, 40, 0.6);
+}
+
+.lane-divider {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    transform: translateX(-50%);
+    background: repeating-linear-gradient(
+        180deg,
+        rgba(200, 170, 120, 0.35) 0 14px,
+        rgba(60, 45, 30, 0.5) 14px 28px
+    );
+    animation: divider-move 0.45s linear infinite;
+}
+
+.lane-edge {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: linear-gradient(
+        90deg,
+        rgba(100, 80, 55, 0.9),
+        rgba(60, 45, 35, 0.95)
+    );
+}
+
+.lane-edge--left {
+    left: 0;
+    border-radius: 6px 0 0 0;
+}
+
+.lane-edge--right {
+    right: 0;
+    border-radius: 0 6px 0 0;
+    background: linear-gradient(
+        90deg,
+        rgba(60, 45, 35, 0.95),
+        rgba(100, 80, 55, 0.9)
+    );
+}
+
+.track-scroll {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        180deg,
+        rgba(90, 70, 45, 0.25) 0 18px,
+        rgba(50, 38, 28, 0.35) 18px 36px
+    );
+    animation: track-scroll 0.55s linear infinite;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+@keyframes track-scroll {
+    from {
+        background-position-y: 0;
+    }
+    to {
+        background-position-y: 36px;
+    }
+}
+
+@keyframes divider-move {
+    from {
+        background-position-y: 0;
+    }
+    to {
+        background-position-y: 28px;
+    }
+}
+
+.obstacles {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+}
+
+.obstacle {
+    position: absolute;
+    width: 38%;
+    height: 14%;
+    min-height: 44px;
+    border-radius: 6px;
+    background: linear-gradient(145deg, #5a4a3a, #2d2418);
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(34, 180, 120, 0.45);
+}
+
+.obstacle::after {
+    content: "";
+    position: absolute;
+    inset: 20% 25%;
+    border-radius: 4px;
+    background: rgba(34, 180, 120, 0.25);
+    box-shadow: 0 0 12px rgba(34, 220, 140, 0.35);
+}
+
+/* Jugador: fijo abajo, animación de carrera */
+.player {
+    position: absolute;
+    z-index: 5;
+    bottom: 6%;
+    left: 0;
+    width: 100%;
+    height: 22%;
+    pointer-events: none;
+    transition: transform 0.18s ease-out;
+}
+
+.player-body {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 56px;
+    height: 72px;
+    transform: translateX(-50%);
+    animation: run-bob 0.28s ease-in-out infinite;
+}
+
+.player-head {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 22px;
+    height: 22px;
+    margin-left: -11px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, #c75a3a, #a04028);
+    box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.player-torso {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    width: 28px;
+    height: 26px;
+    margin-left: -14px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, #c9a86c, #8b6f45);
+}
+
+.player-legs {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 32px;
+    height: 28px;
+    margin-left: -16px;
+    background: linear-gradient(180deg, #2d4a32, #1e3324);
+    border-radius: 0 0 6px 6px;
+    animation: run-legs 0.28s steps(2) infinite;
+}
+
+.player[data-lane="0"] {
+    transform: translateX(-25%);
+}
+
+.player[data-lane="1"] {
+    transform: translateX(25%);
+}
+
+@keyframes run-bob {
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-4px);
+    }
+}
+
+@keyframes run-legs {
+    0% {
+        clip-path: inset(0 40% 0 0);
+    }
+    50% {
+        clip-path: inset(0 0 0 40%);
+    }
+    100% {
+        clip-path: inset(0 40% 0 0);
+    }
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.65rem;
+}
+
+.btn {
+    font: inherit;
+    font-weight: 600;
+    padding: 0.85rem 0.5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #1a1520;
+    background: linear-gradient(180deg, #ffd27a, #e8a840);
+    box-shadow: 0 4px 0 #8b6914, 0 6px 16px rgba(0, 0, 0, 0.35);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+    touch-action: manipulation;
+}
+
+.btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #8b6914, 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-left {
+    text-align: center;
+}
+
+.btn-right {
+    text-align: center;
+}
+
+.btn-primary {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    color: #1a1520;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 8, 14, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+}
+
+.overlay.hidden {
+    display: none;
+}
+
+.overlay-card {
+    background: linear-gradient(165deg, #3d3038, #2a2228);
+    border: 2px solid rgba(255, 210, 122, 0.35);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    max-width: 320px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.overlay-card h2 {
+    margin: 0 0 0.5rem;
+    color: #ff9a6b;
+    font-size: 1.35rem;
+}
+
+.overlay-card p {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+@media (min-width: 480px) {
+    .title {
+        font-size: 1.4rem;
+    }
+}

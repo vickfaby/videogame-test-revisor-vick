@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Temple Run — Carril dual (VIC)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header class="hud">
+            <h1 class="title">Carrera de templo</h1>
+            <p class="hint">Evita los obstáculos. Usa los botones o ← → en teclado.</p>
+        </header>
+
+        <main class="stage-wrap">
+            <div id="game-stage" class="game-stage" aria-label="Área de juego">
+                <div class="sky"></div>
+                <div class="parallax">
+                    <div class="clouds"></div>
+                    <div class="mountains"></div>
+                </div>
+                <div class="track">
+                    <div class="lane-divider"></div>
+                    <div class="lane-edge lane-edge--left"></div>
+                    <div class="lane-edge lane-edge--right"></div>
+                    <div id="track-scroll" class="track-scroll"></div>
+                </div>
+                <div id="obstacles" class="obstacles"></div>
+                <div id="player" class="player" data-lane="0">
+                    <div class="player-body">
+                        <span class="player-head"></span>
+                        <span class="player-torso"></span>
+                        <span class="player-legs"></span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <nav class="controls" aria-label="Controles">
+            <button type="button" id="btn-left" class="btn btn-left">◀ Mover izquierda</button>
+            <button type="button" id="btn-right" class="btn btn-right">Mover derecha ▶</button>
+        </nav>
+
+        <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+            <div class="overlay-card">
+                <h2 id="overlay-title">¡Choque!</h2>
+                <p>Has chocado con un obstáculo.</p>
+                <button type="button" id="btn-restart" class="btn btn-primary">Reiniciar</button>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
