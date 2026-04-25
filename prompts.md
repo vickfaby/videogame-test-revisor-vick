@@ -54,5 +54,4 @@ excelente, ahora, registra todos los prompts ingresados en este chat en el archi
 ---
 
 ## Nota
-
 La implementación del juego vive en la carpeta **`templeRun-VIC/`**, donde también hay un `prompts.md` con resumen del encargo, proceso de desarrollo y desafíos.
